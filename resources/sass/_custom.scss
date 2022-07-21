@@ -1,5 +1,5 @@
 // Write your custom css/scss here
-$body-bg: #f8fafc;
+
 // btn-custom
 .bg-teal {
   background-color: $teal;
@@ -9,11 +9,6 @@ $font-family-sans-serif: 'Nunito', sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
-// deactive offset in form group
-*{
-    outline: none !important;
-    offset: 0 !important;
-}
 
 $font-family-base : 'Lora', serif;
 // overlay
@@ -32,7 +27,6 @@ $overlay-opacity: 0.7;
     background-color: $gray-600;
     background-size: cover;
     background-attachment: scroll;
-
     &:before {
         content: '';
         position: absolute;
@@ -43,6 +37,7 @@ $overlay-opacity: 0.7;
         background-color: $overlay-background;
         opacity: $overlay-opacity;
     }
+
 }
 
 
