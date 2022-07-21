@@ -17,17 +17,6 @@ class LoginController extends Controller
     // has roles trait
     use HasRoles, AuthenticatesUsers;
 
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
-
     public function showLoginForm()
     {
         return view('pages.auth.login');
@@ -38,9 +27,19 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         if ($user->hasRole('admin')) {
-            return redirect()->route('dashboard');
+            return redirect('/admin');
         } else {
-            return redirect()->route('user.index');
+            return redirect('/');
         }
+    }
+
+    // logout
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return redirect('/');
     }
 }

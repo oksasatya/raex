@@ -1,7 +1,7 @@
 .page-wrapper .navbar {
   width: calc(100% - #{$sidebar-width-lg});
 //   width: 100%;
-  height: $navbar-height;
+//   height: $navbar-height;
   padding: 0;
   position: fixed;
   right: 0;
@@ -15,8 +15,6 @@
 .navbar {
   // width: calc(100% - #{$sidebar-width-lg});
   // height: $navbar-height;
-  background: $primary-green;
-  border-bottom: 1px solid $border-color;
   display: flex;
   align-items: center;
   // padding: 0;
@@ -34,12 +32,15 @@
     }
   }
   .navbar-nav .nav-link{
-    color: $secondary-yellow;
     //border-bottom if active
     &.active{
-      color: $secondary-yellow;
       border-bottom: 2px solid $secondary-yellow;
     }
+  }
+  .fixed-top .scrolled{
+    background-color: $primary-green !important;
+    transition: background-color 200ms linear;
+
   }
   .sidebar-toggler {
     height: 100%;
