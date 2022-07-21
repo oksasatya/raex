@@ -228,4 +228,8 @@ return [
 
     ],
 
+    // raja ongkir api key
+    'rajaongkir_api_key' => env('RAJAONGKIR_API_KEY'),
+    // raja ongkir api url
+    'rajaongkir_api_url' => env('RAJAONGKIR_API_URL'),
 ];

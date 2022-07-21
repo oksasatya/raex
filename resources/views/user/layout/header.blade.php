@@ -12,6 +12,11 @@
                 <a class="nav-link {{ active_class(['/']) }}" aria-current="page" href="{{ route('home') }}">Home</a>
                 <a class="nav-link" href="#">Features</a>
                 <a class="nav-link" href="#">Pricing</a>
+                {{-- button login and register --}}
+                <button class="btn btn-sm bg-teal text-white"><a class="nav-link"
+                        href="{{ route('login') }}">Login</a></button>
+                <a class="nav-link" href="{{ route('register') }}">Register</a>
+                {{-- end button login and register --}}
             </div>
         </div>
     </div>

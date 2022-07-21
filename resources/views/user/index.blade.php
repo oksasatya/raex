@@ -26,36 +26,30 @@
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <div class="owl-carousel owl-theme owl-auto-play">
-                            <div class="item">
-                                <img src="{{ url('assets/images/turtle/1.jpg') }}" alt="item-image">
-                            </div>
-                            <div class="item">
-                                <img src="{{ url('assets/images/turtle/2.jpg') }}" alt="item-image">
-                            </div>
-                            <div class="item">
-                                <img src="{{ url('assets/images/turtle/3.jpg') }}" alt="item-image">
-                            </div>
-                            <div class="item">
-                                <img src="{{ url('assets/images/turtle/4.jpg') }}" alt="item-image">
-                            </div>
-                            <div class="item">
-                                <img src="{{ url('assets/images/turtle/5.jpg') }}" alt="item-image">
-                            </div>
-                            <div class="item">
-                                <img src="{{ url('assets/images/turtle/6.jpg') }}" alt="item-image">
-                            </div>
-                            <div class="item">
-                                <img src="{{ url('assets/images/turtle/7.jpg') }}" alt="item-image">
-                            </div>
-                            <div class="item">
-                                <img src="{{ url('assets/images/turtle/8.jpg') }}" alt="item-image">
-                            </div>
-                        </div>
+                        {{-- owl-carousel --}}
+                        @include('user.partials.owl-carousel')
+                        {{-- end owl-carousel --}}
                     </div>
                 </div>
             </div>
         </div>
+
+        {{-- article story  of turtle --}}
+        <div class="row">
+            <h1 class="fw-italic text-center mb-3">Sejarah Kura-Kura</h1>
+            <div class="col-md-12 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body shadow-lg">
+                        {{-- story turtle from wikipedia --}}
+                        <h4 class="card-title text-center fw-bolder">Kura-Kura</h4>
+                        @include('user.partials.turtle-story')
+                        {{-- end story turtle from wikipedia --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- end article story  of turtle --}}
+
     </div>
 @endsection
 @push('plugin-scripts')

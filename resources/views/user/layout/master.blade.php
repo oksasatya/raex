@@ -5,11 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="Responsive Laravel Admin Dashboard Template based on Bootstrap 5">
-    <meta name="author" content="NobleUI">
-    <meta name="keywords"
-        content="nobleui, bootstrap, bootstrap 5, bootstrap5, admin, dashboard, template, responsive, css, sass, html, laravel, theme, front-end, ui kit, web">
-
+    <meta name="description">
     <title>Raex</title>
 
     <!-- Fonts -->
@@ -42,13 +38,14 @@
 <body data-base-url="{{ url('/') }}">
 
     <script src="{{ asset('assets/js/spinner.js') }}"></script>
-    @include('user.layout.header')
+
     <div class="main-user" id="app">
+        @include('user.layout.header')
         <div class="user-wrapper">
             @yield('content')
         </div>
     </div>
-    @include('layout.footer')
+    @include('user.layout.footer')
     <!-- base js -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('assets/plugins/feather-icons/feather.min.js') }}"></script>
