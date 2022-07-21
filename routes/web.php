@@ -13,14 +13,13 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
 
-Route::get('/', function () {
-    return view('user.index');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 // group and prefix

@@ -16,6 +16,10 @@
       right: 0;
     }
   }
+  .user-wrapper{
+    // set display full width
+    width: $main-content-full-width;
+  }
   &:not(.open-sidebar-folded) {
     .sidebar {
       width: $sidebar-folded-width;
@@ -78,5 +82,21 @@
         z-index: 980;
       }
     }
-  }    
+  }
 }
+
+.main-user {
+    &::before {
+      content: '';
+      width: 100%;
+    //   background: rgba(0, 0, 0, .3);
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      z-index: 99;
+      -webkit-transition: all 3s ease;
+      transition: all 3s ease;
+      z-index: 980;
+    }
+  }

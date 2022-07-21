@@ -1,1 +1,67 @@
 // Write your custom css/scss here
+$body-bg: #f8fafc;
+
+// Typography
+$font-family-sans-serif: 'Nunito', sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+// deactive offset in form group
+*{
+    outline: none !important;
+    offset: 0 !important;
+}
+
+$font-family-base : 'Lora', serif;
+// overlay
+$overlay-background: $black;
+$overlay-opacity: 0.7;
+.logo{
+    max-width: 67px;
+    transform: scale(1.8);
+    margin-left: 28px;
+}
+.header{
+    position: relative;
+
+    padding-top: calc(8rem + 60px);
+    padding-bottom: 10rem;
+    background: no-repeat center;
+    background-color: $gray-600;
+    background-size: cover;
+    background-attachment: scroll;
+
+
+    &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: $overlay-background;
+        opacity: $overlay-opacity;
+    }
+}
+
+
+//typografi
+.page-heading,
+.site-heading {
+    text-align: center;
+    font-family: $font-family-base;
+    color: $white;
+
+    h1 {
+        font-size: 3rem;
+    }
+
+    .subheading {
+        font-size: 1rem;
+        font-weight: 300;
+        line-height: 1.1;
+        display: block;
+        margin-top: 0.625rem;
+        font-family: $font-family-base;
+    }
+}
