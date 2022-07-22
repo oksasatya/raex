@@ -44,8 +44,8 @@
         <div class="user-wrapper">
             @yield('content')
         </div>
+        @include('user.layout.footer')
     </div>
-    @include('user.layout.footer')
     <!-- base js -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('assets/plugins/feather-icons/feather.min.js') }}"></script>
