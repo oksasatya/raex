@@ -4,6 +4,7 @@
     <link href="{{ asset('assets/plugins/owl-carousel/assets/owl.carousel.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/owl-carousel/assets/owl.theme.default.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/animate-css/animate.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/prismjs/prism.css') }}" rel="stylesheet" />
 @endpush
 @section('content')
     <section class="header" style="background-image: url('assets/images/raex/turtle.jpg')">
@@ -21,7 +22,7 @@
             </div>
         </div>
     </section>
-    <div class="container">
+    <div class="container position-relative px-4 px-lg-5">
         <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
@@ -55,6 +56,7 @@
 @push('plugin-scripts')
     <script src="{{ asset('assets/plugins/owl-carousel/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/jquery-mousewheel/jquery.mousewheel.js') }}"></script>
+    <script src="{{ asset('assets/plugins/prismjs/prism.js') }}"></script>
 @endpush
 
 @push('custom-scripts')

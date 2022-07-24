@@ -11,3 +11,10 @@ body {
     color: $value;
   }
 }
+
+// each color value
+@each $color, $value in $colors {
+  .text-#{$color} {
+    color: $value;
+  }
+}

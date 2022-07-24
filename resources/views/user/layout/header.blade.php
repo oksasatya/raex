@@ -1,8 +1,8 @@
-{{-- if route == 'login' --}}
-@if (Route::currentRouteName() == 'login')
-    <nav class="navbar navbar-expand-lg navbar-light bg-transparent shadow-lg fixed-top ">
+{{-- if route == '/' --}}
+@if (Route::currentRouteName() == 'landing-page')
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent shadow-lg fixed-top ">
     @else
-        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent shadow-lg fixed-top ">
+        <nav class="navbar navbar-expand-lg bg-transparent shadow-lg fixed-top ">
 @endif
 <div class="container-fluid">
     <a class="navbar-brand" href="#">
@@ -16,7 +16,7 @@
         <div class="navbar-nav ms-auto">
             {{-- active class nav-link / or /user --}}
             <a class="nav-link {{ active_class(['/']) }}" aria-current="page" href="{{ url('/') }}">Home</a>
-            <a class="nav-link" href="#">Belanja</a>
+            <a class="nav-link" href="{{ route('products.index') }}">product</a>
             @if (Auth::check())
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
@@ -69,6 +69,9 @@
                         </ul>
                     </div>
                 </li>
+            @elseif (Route::currentRouteName() == 'login')
+                <a class="nav-link btn btn-success text-dark btn-sm d-none" href="{{ route('login') }}">Login</a>
+                <a class="nav-link d-none" href="{{ route('register') }}">Register</a>
             @else
                 <a class="nav-link btn btn-success text-dark btn-sm {{ active_class(['login']) }}"
                     href="{{ route('login') }}">Login</a>

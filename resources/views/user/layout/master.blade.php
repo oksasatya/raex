@@ -38,7 +38,6 @@
 <body data-base-url="{{ url('/') }}">
 
     <script src="{{ asset('assets/js/spinner.js') }}"></script>
-
     <div class="main-user" id="app">
         @include('user.layout.header')
         <div class="user-wrapper">

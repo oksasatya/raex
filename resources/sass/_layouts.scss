@@ -16,10 +16,6 @@
       right: 0;
     }
   }
-  .user-wrapper{
-    // set display full width
-    width: $main-content-full-width;
-  }
   &:not(.open-sidebar-folded) {
     .sidebar {
       width: $sidebar-folded-width;
@@ -86,6 +82,7 @@
 }
 
 .main-user {
+    max-height: 100vh;
     &::before {
       width: 100%;
     //   background: rgba(0, 0, 0, .3);
@@ -97,4 +94,4 @@
       -webkit-transition: all 3s ease;
       transition: all 3s ease;
     }
-  }
+}

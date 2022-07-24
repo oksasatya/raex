@@ -14,6 +14,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\userController;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,10 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
 // guest only
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('landing-page');
+Route::get('/products', function () {
+    return view('user.product.index');
+})->name('products.index');
 
 Auth::routes();
 // after login prefix user

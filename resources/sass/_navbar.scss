@@ -17,6 +17,7 @@
   // height: $navbar-height;
   display: flex;
   align-items: center;
+  opacity: 0.9;
   // padding: 0;
   // position: fixed;
   // right: 0;
@@ -31,14 +32,21 @@
       width: calc(100% - #{$sidebar-folded-width} - 1px);
     }
   }
+
   .navbar-nav .nav-link{
+    font-family: $font-family-base;
+    color: $gray-700;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    &:hover {
+        color: $teal;
+        border-bottom: 1px solid $teal;
+    }
     //border-bottom if active
     &.active{
-      border-bottom: 2px solid $secondary-yellow;
+        border-bottom: 1px solid $teal;
     }
   }
   .fixed-top .scrolled{
-    background-color: $primary-green !important;
     transition: background-color 200ms linear;
 
   }
