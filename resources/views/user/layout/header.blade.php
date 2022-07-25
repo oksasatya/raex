@@ -16,7 +16,7 @@
         <div class="navbar-nav ms-auto">
             {{-- active class nav-link / or /user --}}
             <a class="nav-link {{ active_class(['/']) }}" aria-current="page" href="{{ url('/') }}">Home</a>
-            <a class="nav-link" href="{{ route('products.index') }}">product</a>
+            <a class="nav-link {{ active_class(['products']) }}" href="{{ route('products.index') }}">product</a>
             @if (Auth::check())
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
