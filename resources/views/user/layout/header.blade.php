@@ -5,7 +5,7 @@
         <nav class="navbar navbar-expand-lg bg-transparent shadow-lg fixed-top ">
 @endif
 <div class="container-fluid">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="{{ url('/') }}">
         <img src="{{ asset('assets/images/logo.png') }}" class="logo" alt="">
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -69,7 +69,7 @@
                         </ul>
                     </div>
                 </li>
-            @elseif (Route::currentRouteName() == 'login')
+            @elseif (Route::currentRouteName() == 'login' || Route::currentRouteName() == 'register')
                 <a class="nav-link btn btn-success text-dark btn-sm d-none" href="{{ route('login') }}">Login</a>
                 <a class="nav-link d-none" href="{{ route('register') }}">Register</a>
             @else
