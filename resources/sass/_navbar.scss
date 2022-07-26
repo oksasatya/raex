@@ -157,7 +157,6 @@
             width: max-content;
             position: absolute;
             right: -20px;
-            left: auto;
             @extend .dropdownAnimation;
             &::before {
               content: '';

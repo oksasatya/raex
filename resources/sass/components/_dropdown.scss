@@ -1,4 +1,4 @@
-// Dropdowns 
+// Dropdowns
 
 .dropdown,
 .btn-group {
@@ -9,7 +9,7 @@
       border-left: 0;
       border-bottom: 0;
       font: normal normal normal 24px/1 "feather";
-      content: "\e842";  
+      content: "\e842";
       width: auto;
       height: auto;
       vertical-align: middle;
@@ -50,7 +50,8 @@
 .dropdown-menu {
   padding: .35rem;
   margin-top: 0;
-  box-shadow: $dropdown-box-shadow; 
+  box-shadow: $dropdown-box-shadow;
+  margin-left: -111px;
 }
 
 .dropdown-item {
@@ -64,7 +65,7 @@
     background-color: rgba($primary, .1);
     &, i, svg {
       color: $primary;
-    }        
+    }
   }
   &:active,
   &.active {

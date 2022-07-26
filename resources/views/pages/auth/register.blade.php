@@ -20,21 +20,49 @@
                                     <a href="{{ url('/') }}" class="noble-ui-logo d-block mb-2">Raex</a>
                                     <h5 class="text-muted fw-normal mb-4">Create a account.</h5>
                                     <div class="mb-3">
+                                        <label for="name" class="form-label">Username</label>
+                                        <input type="name" class="form-control @error('name') is-invalid @enderror"
+                                            id="name" name="name" placeholder="Username">
+                                        @error('name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="email" class="form-label">Email address</label>
-                                        <input type="email" class="form-control" id="email" placeholder="Email"
-                                            name="email">
+                                        <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                            id="email" placeholder="Email" name="email" value="{{ old('email') }}"
+                                            required autocomplete="email" autofocus>
+                                        @error('email')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                     <div class="mb-3">
                                         <label for="password" class="form-label">Password</label>
-                                        <input type="password" class="form-control" id="password"
-                                            autocomplete="current-password" placeholder="Password" name="password">
+                                        <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                            id="password" name="password" placeholder="Password" required
+                                            autocomplete="new-password">
+                                        @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
-                                    {{-- <div class="mb-3">
+                                    <div class="mb-3">
                                         <label for="confirmed_password" class="form-label">Password Confirmation</label>
-                                        <input type="password" class="form-control" id="confirmed_password"
-                                            autocomplete="current-password" placeholder="Password Confirmation"
-                                            name="confirmed_password">
-                                    </div> --}}
+                                        <input type="password"
+                                            class="form-control @error('confirmed_password') is-invalid @enderror"
+                                            id="confirmed_password" name="confirmed_password"
+                                            placeholder="Password Confirmation" required autocomplete="new-password">
+                                        @error('confirmed_password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                     <div>
                                         <div class="form-group">
                                             <button type="submit"
@@ -42,7 +70,7 @@
                                         </div>
 
                                     </div>
-                                    <a href="{{ url('/auth/login') }}" class="d-block mt-3 text-muted">Already a user?
+                                    <a href="{{ route('login') }}" class="d-block mt-3 text-muted">Already a user?
                                         Sign
                                         in</a>
                                 </div>

@@ -30,13 +30,14 @@
                                             <input type="password" class="form-control" id="password" name="password"
                                                 autocomplete="current-password" placeholder="Password">
                                         </div>
+
                                         <div>
                                             <div class="form-group">
                                                 <button type="submit"
                                                     class="btn form-control btn-secondary rounded submit px-3">{{ __('login') }}</button>
                                             </div>
                                         </div>
-                                        <a href="{{ url('/auth/register') }}" class="d-block mt-3 text-muted">Not a user?
+                                        <a href="{{ route('register') }}" class="d-block mt-3 text-muted">Not a user?
                                             Sign
                                             up</a>
                                     </form>

@@ -17,9 +17,10 @@ class RegisterController extends Controller
     public function register(RegisterRequest $request)
     {
         $user = new User();
+        $user->name = $request->name;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
-        // $user->confirmed_password = bcrypt($request->confirmed_password);
+        $user->assignRole('user');
         $user->save();
         // dd($user);
         return redirect()->route('login')->with('success', 'Berhasil mendaftar, silahkan login');
