@@ -5,9 +5,15 @@
         <nav class="navbar navbar-expand-lg bg-transparent shadow-lg fixed-top ">
 @endif
 <div class="container-fluid">
-    <a class="navbar-brand" href="{{ url('/') }}">
-        <img src="{{ asset('assets/images/logo.png') }}" class="logo" alt="">
-    </a>
+    @role('admin')
+        <a class="navbar-brand" href="{{ url('/admin') }}">
+            <img src="{{ asset('assets/images/logo.png') }}" class="logo" alt="">
+        </a>
+    @else
+        <a class="navbar-brand" href="{{ url('/') }}">
+            <img src="{{ asset('assets/images/logo.png') }}" class="logo" alt="">
+        </a>
+    @endrole
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

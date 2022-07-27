@@ -1,8 +1,27 @@
 @extends('user.layout.master')
-
+@push('plugin-styles')
+    {{-- form-validation --}}
+    <link rel="stylesheet" href="{{ asset('assets/plugins/form-validation/css/formValidation.min.css') }}">
+    <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
+@endpush
+<script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 @section('content')
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                title: 'Success!',
+                icon: 'success',
+                text: '{{ session('success') }}',
+            });
+        </script>
+    @endif
     {{-- hit login form action --}}
-    <form action="{{ route('login') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('login') }}" method="POST" enctype="multipart/form-data" id="loginForm">
         @csrf
         <div class="page-content d-flex align-items-center justify-content-center mt-5 pt-5">
             <div class="row w-100 mx-0 auth-page">
@@ -51,3 +70,13 @@
         </div>
     </form>
 @endsection
+
+@push('plugin-scripts')
+    {{-- form-validation --}}
+    <script src="{{ asset('assets/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+@endpush
+
+@push('custom-scripts')
+    {{-- form-validation js --}}
+    <script src="{{ asset('assets/js/form-validation.js') }}"></script>
+@endpush

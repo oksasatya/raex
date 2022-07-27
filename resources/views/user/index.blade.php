@@ -5,8 +5,25 @@
     <link href="{{ asset('assets/plugins/owl-carousel/assets/owl.theme.default.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/animate-css/animate.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('assets/plugins/prismjs/prism.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('assets/plugins/form-validation/css/formValidation.min.css') }}">
+    <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
 @endpush
+<script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 @section('content')
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                title: 'Success!',
+                icon: 'success',
+                text: '{{ session('success') }}',
+            });
+        </script>
+    @endif
     <section class="header" style="background-image: url('assets/images/raex/turtle.jpg')">
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">

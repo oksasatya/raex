@@ -38,6 +38,11 @@ Route::middleware(['auth', 'role:user'], function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::group(['prefix' => 'admin'], function () {
         Route::get('/', [AdminController::class, 'index']);
+
+        //prefix product
+        Route::group(['prefix' => 'products'], function () {
+            Route::resource('/index', ProductController::class);
+        });
     });
 });
 

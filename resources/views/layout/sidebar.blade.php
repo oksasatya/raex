@@ -29,16 +29,8 @@
                 <div class="collapse {{ show_class(['product/*']) }}" id="product">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
-                            <a href="{{ url('/product/inbox') }}"
-                                class="nav-link {{ active_class(['product/inbox']) }}">Inbox</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/product/read') }}"
-                                class="nav-link {{ active_class(['product/read']) }}">Read</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('/product/compose') }}"
-                                class="nav-link {{ active_class(['product/compose']) }}">Compose</a>
+                            <a href="{{ url('admin/products/index') }}"
+                                class="nav-link {{ active_class(['product/inbox']) }}">Index</a>
                         </li>
                     </ul>
                 </div>

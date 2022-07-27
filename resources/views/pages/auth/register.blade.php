@@ -1,8 +1,25 @@
 @extends('user.layout.master')
-
-
+@push('plugin-styles')
+    <link rel="stylesheet" href="{{ asset('assets/plugins/form-validation/css/formValidation.min.css') }}">
+    <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
+@endpush
+<script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 @section('content')
-    <form action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                title: 'Success!',
+                icon: 'success',
+                text: '{{ session('success') }}',
+            });
+        </script>
+    @endif
+    <form action="{{ route('register') }}" method="POST" enctype="multipart/form-data" id="signupForm">
         @csrf
         <div class="page-content d-flex align-items-center justify-content-center my-5 pt-5">
             <div class="row w-100 mx-0 auth-page">
@@ -21,7 +38,7 @@
                                     <h5 class="text-muted fw-normal mb-4">Create a account.</h5>
                                     <div class="mb-3">
                                         <label for="name" class="form-label">Username</label>
-                                        <input type="name" class="form-control @error('name') is-invalid @enderror"
+                                        <input type="text" class="form-control @error('name') is-invalid @enderror"
                                             id="name" name="name" placeholder="Username">
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
@@ -83,3 +100,12 @@
         </div>
     </form>
 @endsection
+@push('plugin-scripts')
+    {{-- form-validation --}}
+    <script src="{{ asset('assets/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+@endpush
+
+@push('custom-scripts')
+    {{-- form-validation js --}}
+    <script src="{{ asset('assets/js/form-validation.js') }}"></script>
+@endpush
