@@ -27,4 +27,10 @@ class Product extends Model
     {
         return $this->belongsToMany(Order::class);
     }
+
+    public static $category = [
+        'Food',
+        'Turtle',
+        'Other',
+    ];
 }

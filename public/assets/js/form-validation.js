@@ -132,4 +132,76 @@ $(function() {
             }
           }
     });
+
+
+    // create product validation
+    $("#submitProduct").validate({
+        rules: {
+            name: {
+                required: true,
+                minlength: 3
+            },
+            description:{
+                required: true,
+                minlength: 3
+            },
+            image:{
+                required: true,
+                accept: "image/*",
+            },
+            price: {
+                required: true,
+            },
+            category: {
+                required: true,
+            }
+        },
+        messages: {
+            name: {
+                required: "Please enter a name",
+                minlength: "Name must consist of at least 3 characters"
+            },
+            description: {
+                required: "Please enter a description",
+                minlength: "Description must consist of at least 3 characters"
+            },
+            image: {
+                required: "Please upload an image",
+                accept: "Please upload an image",
+            },
+            price: {
+                required: "Please enter a price",
+            },
+            category: {
+                required: "Please select a category",
+            }
+        },
+        errorPlacement: function(error, element) {
+            error.addClass( "invalid-feedback" );
+
+            if (element.parent('.input-group').length) {
+              error.insertAfter(element.parent());
+            }
+            else if (element.prop('type') === 'radio' && element.parent('.radio-inline').length) {
+              error.insertAfter(element.parent().parent());
+            }
+            else if (element.prop('type') === 'checkbox' || element.prop('type') === 'radio') {
+              error.appendTo(element.parent().parent());
+            }
+            else {
+              error.insertAfter(element);
+            }
+        },
+        highlight: function(element, errorClass) {
+            if ($(element).prop('type') != 'checkbox' && $(element).prop('type') != 'radio') {
+              $( element ).addClass( "is-invalid" ).removeClass( "is-valid" );
+            }
+        },
+        unhighlight: function(element, errorClass) {
+            if ($(element).prop('type') != 'checkbox' && $(element).prop('type') != 'radio') {
+                $( element ).addClass( "is-valid" ).removeClass( "is-invalid" );
+            }
+        }
+
+    });
 });

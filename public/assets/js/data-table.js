@@ -27,11 +27,11 @@ $(function() {
         "aLengthMenu": [
             [10, 30, 50, -1],
             [10, 30, 50, "All"]
-        ],
+          ],
         "iDisplayLength": 10,
         "language": {
             search: ""
-        }
+        },
     });
     $('#productTable').each(function() {
         var datatable = $(this);
@@ -42,7 +42,12 @@ $(function() {
         // LENGTH - Inline-Form control
         var length_sel = datatable.closest('.dataTables_wrapper').find('div[id$=_length] select');
         length_sel.removeClass('form-control-sm');
-    });
-  });
 
-});
+
+    });
+    });
+
+
+
+}
+);

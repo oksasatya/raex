@@ -19,18 +19,18 @@
                 </a>
             </li>
             <li class="nav-item nav-category">Admin Menu</li>
-            <li class="nav-item {{ active_class(['product/*']) }}">
+            <li class="nav-item {{ active_class(['admin/products/*']) }}">
                 <a class="nav-link" data-bs-toggle="collapse" href="#product" role="button"
-                    aria-expanded="{{ is_active_route(['product/*']) }}" aria-controls="product">
+                    aria-expanded="{{ is_active_route(['admin/product/*']) }}" aria-controls="product">
                     <i class="link-icon" data-feather="box"></i>
                     <span class="link-title">product</span>
                     <i class="link-arrow" data-feather="chevron-down"></i>
                 </a>
-                <div class="collapse {{ show_class(['product/*']) }}" id="product">
+                <div class="collapse {{ show_class(['admin/products/*']) }}" id="product">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
                             <a href="{{ url('admin/products/index') }}"
-                                class="nav-link {{ active_class(['product/inbox']) }}">Index</a>
+                                class="nav-link {{ active_class(['admin/products/index']) }}">Index</a>
                         </li>
                     </ul>
                 </div>

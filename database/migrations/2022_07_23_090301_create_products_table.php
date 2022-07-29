@@ -19,7 +19,11 @@ return new class extends Migration
             $table->string('description');
             $table->string('image');
             $table->integer('price');
-            $table->string('category');
+            $table->enum('category', [
+                'Food',
+                'Turtle',
+                'Other'
+            ])->default('other');
             $table->timestamps();
         });
     }

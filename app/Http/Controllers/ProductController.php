@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -15,8 +16,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return view('pages.products.index', compact('products'));
+        $data = [
+            //get product order by created_at desc
+            'products' => Product::all(),
+            'category' => Product::$category,
+        ];
+        return view('pages.products.index', $data);
     }
 
     /**
@@ -37,7 +42,16 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        $product = Product::create($request->validated());
+        // handle image upload
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = $product->id . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images/products'), $imageName);
+            $product->image = $imageName;
+            $product->save();
+        }
+        return redirect()->route('index.index')->with('success', 'Product berhasil ditambahkan');
     }
 
     /**
@@ -80,8 +94,13 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        if ($product->image) {
+            Storage::delete('images/products/' . $product->image);
+        }
+        $product->delete();
+        return redirect()->route('index.index')->with('success', 'Product berhasil dihapus');
     }
 }

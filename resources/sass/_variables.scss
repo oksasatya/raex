@@ -25,7 +25,18 @@ $green-700:    #2f855a !default;
 $green-800:    #276749 !default;
 $green-900:    #22543d !default;
 
-
+// // custom green colors
+$green-colors:(
+    "100": $green-100,
+    "200": $green-200,
+    "300": $green-300,
+    "400": $green-400,
+    "500": $green-500,
+    "600": $green-600,
+    "700": $green-700,
+    "800": $green-800,
+    "900": $green-900
+) !default;
 
 // mycolor
 $primary-green : #023b2a !default;
@@ -64,7 +75,7 @@ $dark:            $gray-900 !default;
 
 // Social colors
 $social-colors: (
-  "facebook":        #3b5998,
+  "facebook":#3b5998,
   "twitter":         #1da1f2,
   "google":          #dc4e41,
   "youtube":         #f00,
