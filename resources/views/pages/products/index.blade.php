@@ -8,6 +8,7 @@
 @endpush
 {{-- sweet alert --}}
 <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+
 @section('content')
     {{-- trigger sweet if form success --}}
     @if (session('success'))
@@ -61,7 +62,7 @@
                                     <td>{{ $product->category }}</td>
                                     <td>
                                         <button class="btn btn-sm btn-green-600">Show</button>
-                                        <button class="btn btn-sm btn-facebook"data-bs-toggle="modal"
+                                        <button class="btn btn-sm  btn-facebook"data-bs-toggle="modal"
                                             data-bs-target="#formEdit{{ $product->id }}">Edit</button>
                                         <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
                                             data-bs-target="#formDelete{{ $product->id }}">Delete</button>
@@ -71,6 +72,18 @@
                                 @include('pages.products.form.edit')
                             @endforeach
                         </tbody>
+                        <tfoot>
+                            {{-- <tr>
+                                <td colspan="10">{{ $products->appends(Request::all())->links() }}</td>
+                            </tr> --}}
+                            <tr>
+                                <td colspan="10">
+                                    <div class="float-right">
+                                        {{ $products->appends(Request::all())->links() }}
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

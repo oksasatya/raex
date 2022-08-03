@@ -17,8 +17,8 @@ class ProductController extends Controller
     public function index()
     {
         $data = [
-            //get product order by created_at desc
-            'products' => Product::all(),
+            //get product order by created_at desc paginate 10
+            'products' => Product::orderBy('created_at', 'desc')->paginate(10),
             'category' => Product::$category,
         ];
         return view('pages.products.index', $data);
@@ -86,9 +86,10 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request, $id)
     {
-        //
+        $request->execute($id);
+        return redirect()->route('index.index')->with('success', 'Product berhasil diubah');
     }
 
     /**
