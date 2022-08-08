@@ -23,9 +23,7 @@ use Illuminate\Support\Facades\View;
 
 // guest only
 Route::get('/', [HomeController::class, 'index'])->name('landing-page');
-Route::get('/products', function () {
-    return view('user.product.index');
-})->name('products.index');
+Route::get('/products', [ProductController::class, 'userIndex'])->name('products.index');
 
 Auth::routes();
 // after login prefix user

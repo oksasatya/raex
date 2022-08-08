@@ -107,4 +107,19 @@ class ProductController extends Controller
         $product->delete();
         return redirect()->route('index.index')->with('success', 'Product berhasil dihapus');
     }
+
+
+    /* *
+    * show product in user page
+    *
+    */
+    public function userIndex()
+    {
+        $data = [
+            //get product order by created_at desc paginate 10
+            'products' => Product::orderBy('created_at', 'desc')->paginate(10),
+            'category' => Product::$category,
+        ];
+        return view('user.product.index', $data);
+    }
 }
