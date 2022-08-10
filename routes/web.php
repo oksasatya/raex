@@ -13,6 +13,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -27,23 +28,20 @@ Route::get('/', [HomeController::class, 'index'])->name('landing-page');
 Route::get('/products', [ProductController::class, 'userIndex'])->name('products.index');
 
 
-
 Auth::routes();
 // after login prefix user
-Route::middleware(['auth', 'role:user'], function () {
+Route::middleware(['auth', 'role:user'])->group(function () {
     Route::group(['prefix' => 'user'], function () {
-        Route::get('/', [HomeController::class, 'index']);
-    });
-
-    Route::group(['prefix' => 'order'], function () {
-        Route::resource('/products', OrderController::class);
+        Route::group(['prefix' => 'user'], function () {
+            Route::get('/', [HomeController::class, 'index']);
+        });
+        Route::post('/add-to-cart', [ChartController::class, 'addtochart'])->name('add-to-cart');
     });
 });
 // group and prefix admin
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::group(['prefix' => 'admin'], function () {
         Route::get('/', [AdminController::class, 'index']);
-
         //prefix product
         Route::group(['prefix' => 'products'], function () {
             Route::resource('/index', ProductController::class);

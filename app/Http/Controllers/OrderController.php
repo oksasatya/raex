@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Product;
 
 class OrderController extends Controller
 {
@@ -15,7 +16,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('user.product.order.order');
+        //
     }
 
     /**
