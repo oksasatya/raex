@@ -14,6 +14,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\userController;
 use App\User;
@@ -25,11 +26,17 @@ use Illuminate\Support\Facades\View;
 Route::get('/', [HomeController::class, 'index'])->name('landing-page');
 Route::get('/products', [ProductController::class, 'userIndex'])->name('products.index');
 
+
+
 Auth::routes();
 // after login prefix user
 Route::middleware(['auth', 'role:user'], function () {
     Route::group(['prefix' => 'user'], function () {
         Route::get('/', [HomeController::class, 'index']);
+    });
+
+    Route::group(['prefix' => 'order'], function () {
+        Route::resource('/products', OrderController::class);
     });
 });
 // group and prefix admin

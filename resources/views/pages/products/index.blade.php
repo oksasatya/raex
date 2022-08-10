@@ -61,7 +61,6 @@
                                     <td>Rp {{ number_format($product->price, 2, ',', ',') }}</td>
                                     <td>{{ $product->category }}</td>
                                     <td>
-                                        <button class="btn btn-sm btn-green-600">Show</button>
                                         <button class="btn btn-sm  btn-facebook"data-bs-toggle="modal"
                                             data-bs-target="#formEdit{{ $product->id }}">Edit</button>
                                         <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
