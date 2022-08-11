@@ -24,7 +24,7 @@
             <a class="nav-link {{ active_class(['/']) }}" aria-current="page" href="{{ url('/') }}">Home</a>
             <a class="nav-link {{ active_class(['products']) }}" href="{{ route('products.index') }}">product</a>
             @if (Auth::check())
-                <a href="#" class="nav-link{{ active_class(['chart']) }}">cart</a>
+                <a href="{{ route('cart.index') }}" class="nav-link{{ active_class(['chart']) }}">cart</a>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

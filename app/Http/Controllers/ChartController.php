@@ -23,6 +23,15 @@ class ChartController extends Controller
     public function index()
     {
         $charts = chart::where('user_id', auth()->user()->id)->get();
-        return view('pages.chart.index', compact('charts'));
+        $total = 0;
+        foreach ($charts as $chart) {
+            $total += $chart->product->price * $chart->quantity;
+        }
+        // dd($total);
+        $data = [
+            'charts' => $charts,
+            'total' => $total,
+        ];
+        return view('user.product.cart.index', $data);
     }
 }

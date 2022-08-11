@@ -45,4 +45,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class);
     }
+
+    public function chart()
+    {
+        return $this->hasMany(Chart::class);
+    }
 }

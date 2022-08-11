@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('product_id');
             $table->integer('quantity');
             $table->string('status');
-            $table->string('payment_method');
+            // total price
+            $table->integer('total_price');
             $table->string('payment_status');
             $table->timestamps();
         });

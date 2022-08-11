@@ -32,10 +32,10 @@ Auth::routes();
 // after login prefix user
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::group(['prefix' => 'user'], function () {
-        Route::group(['prefix' => 'user'], function () {
-            Route::get('/', [HomeController::class, 'index']);
-        });
+        Route::get('/', [HomeController::class, 'index']);
+        Route::get('/cart', [ChartController::class, 'index'])->name('cart.index');
         Route::post('/add-to-cart', [ChartController::class, 'addtochart'])->name('add-to-cart');
+        Route::get('/checkout', [OrderController::class, 'index'])->name('checkout.index');
     });
 });
 // group and prefix admin
@@ -56,8 +56,3 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::any('/{page?}', function () {
     return View::make('pages.error.404');
 })->where('page', '.*');
-
-// 503 forbidden for undefined routes
-// Route::any('/{page?}', function () {
-//     return View::make('pages.error.503');
-// })->where('page', '.*')->middleware('auth');

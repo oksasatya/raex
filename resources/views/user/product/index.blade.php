@@ -1,5 +1,26 @@
 @extends('user.layout.master')
+
+@push('plugin-styles')
+    <link href="{{ asset('assets/plugins/@mdi/css/materialdesignicons.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
+@endpush
+<script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+
 @section('content')
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                title: 'Success!',
+                icon: 'success',
+                text: '{{ session('success') }}',
+            });
+        </script>
+    @endif
     <x-layout-user>
         @foreach ($products as $product)
             {{-- create pagination link --}}
@@ -16,12 +37,12 @@
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <input type="hidden" name="quantity" value="1">
-                                <button type="submit" class="btn btn-warning">
+                                <button type="submit" class="btn btn-yellow"><i class="mdi mdi-cart"></i>
                                     Add to cart
                                 </button>
                             </form>
                         @else
-                            <a href="{{ route('login') }}" class="btn btn-primary">
+                            <a href="{{ route('login') }}" class="btn btn-facebook">
                                 Buy
                             </a>
                         @endif
