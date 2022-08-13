@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\City;
 use App\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Product;
+use App\Province;
 
 class OrderController extends Controller
 {
@@ -16,6 +18,12 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $data = [
+            // select city and province
+            'cities' => City::all(),
+            'provinces' => Province::all(),
+        ];
+        return view('user.product.checkout.checkout', $data);
     }
 
     /**
@@ -36,7 +44,13 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        //
+        $order = new Order();
+        $order->user_id = auth()->user()->id;
+        $order->quantity = $request->quantity;
+        $order->total_price = $request->total_price;
+        $order->payment_status = $request->payment_status;
+        $order->status = $request->status;
+        return redirect()->route('user.product.checkout.checkout')->with('success', 'Product berhasil dibuat');
     }
 
     /**
@@ -82,5 +96,15 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         //
+    }
+
+    public function provinces()
+    {
+        return Province::all();
+    }
+
+    public function cities($id)
+    {
+        return City::where('province_id', $id)->get();
     }
 }

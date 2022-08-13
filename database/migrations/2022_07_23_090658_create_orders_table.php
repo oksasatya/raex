@@ -17,10 +17,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->integer('quantity');
-            $table->string('status');
+            $table->enum('status', [1, 2, 3])->default(1);
             // total price
             $table->integer('total_price');
-            $table->string('payment_status');
+            $table->enum('payment_status', [1, 2])->default(1);
             $table->timestamps();
         });
     }
