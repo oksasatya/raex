@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('costs', function (Blueprint $table) {
             $table->id();
+            // province_id, city_id relation
+
+            $table->unsignedBigInteger('province_id');
+            $table->unsignedBigInteger('city_id');
             $table->string('origin');
             $table->string('destination');
             $table->string('weight');

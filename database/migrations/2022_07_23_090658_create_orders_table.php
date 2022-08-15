@@ -16,10 +16,14 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->integer('quantity');
+            $table->unsignedBigInteger('chart_id');
             $table->enum('status', [1, 2, 3])->default(1);
             // total price
-            $table->integer('total_price');
+            $table->string('origin');
+            $table->string('destination');
+            $table->int('weight');
+            $table->string('courier');
+            $table->int('cost');
             $table->enum('payment_status', [1, 2])->default(1);
             $table->timestamps();
         });

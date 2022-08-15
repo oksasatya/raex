@@ -47,14 +47,12 @@
                                 value="{{ Auth::user()->email }}" placeholder="Email">
                         </div>
 
-                        {{-- cek ongkir --}}
-                        <div class="form-group">
-                            <label for="">Shipping Method</label>
-                            <select name="shipping_method" id="shipping_method" class="form-control">
-                                <option value="">Select Shipping Method</option>
-                            </select>
+                        {{-- cek ongkir button --}}
+                        <button type="button" class="btn btn-primary" id="cekOngkir">
+                            Check Shipping Cost
+                        </button>
 
-                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -128,6 +126,40 @@
                                     })
                                 );
                             }
+                        });
+                    }
+                });
+            });
+
+            // cek ongkir
+            $('#cekOngkir').click(function() {
+                $.ajax({
+                    url: "{{ route('checkout.ongkir') }}",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        province_id: $('#province_id').val(),
+                        city_id: $('#city_id').val(),
+                        postal_code: $('#postal_code').val(),
+                        weight: $('#weight').val(),
+                        courier: $('#courier').val()
+                    },
+                    success: function(data) {
+                        $('#ongkir').empty();
+                        $('#ongkir').append(
+                            $('<option>', {
+                                value: "",
+                                text: "Select Shipping Cost"
+                            })
+                        );
+                        $.each(data.data, function(i, data) {
+                            $('#ongkir').append(
+                                $('<option>', {
+                                    value: data.cost[0].value,
+                                    text: data.cost[0].value
+                                })
+                            );
                         });
                     }
                 });
