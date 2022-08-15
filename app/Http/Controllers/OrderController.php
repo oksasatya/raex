@@ -110,29 +110,4 @@ class OrderController extends Controller
     {
         return new Cities(City::all());
     }
-
-    // cek ongkir
-    public function cost(Request $request)
-    {
-        $origin = $request->origin;
-        $destination = $request->destination;
-        $weight = $request->weight;
-        $courier = $request->courier;
-        // server key from env
-        $server_key = env('RAJA_ONGKIR_SERVER_KEY');
-        $url = 'http://api.rajaongkir.com/starter/cost';
-        $data = [
-            'origin' => $origin,
-            'destination' => $destination,
-            'weight' => $weight,
-            'courier' => $courier,
-            'server_key' => $server_key,
-        ];
-        $client = new \GuzzleHttp\Client();
-        $response = $client->request('POST', $url, [
-            'form_params' => $data,
-        ]);
-        $result = json_decode($response->getBody()->getContents(), true);
-        return $result;
-    }
 }

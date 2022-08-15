@@ -21,9 +21,9 @@ return new class extends Migration
             // total price
             $table->string('origin');
             $table->string('destination');
-            $table->int('weight');
+            $table->integer('weight');
             $table->string('courier');
-            $table->int('cost');
+            $table->integer('cost');
             $table->enum('payment_status', [1, 2])->default(1);
             $table->timestamps();
         });
