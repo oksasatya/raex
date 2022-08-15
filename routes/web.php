@@ -28,7 +28,7 @@ Route::get('/', [HomeController::class, 'index'])->name('landing-page');
 Route::get('/products', [ProductController::class, 'userIndex'])->name('products.index');
 
 Route::get('provinces', [OrderController::class, 'provinces'])->name('provinces');
-Route::get('cities', [OrderController::class, 'cities']);
+Route::get('cities', [OrderController::class, 'cities'])->name('cities');
 Auth::routes();
 // after login prefix user
 Route::middleware(['auth', 'role:user'])->group(function () {

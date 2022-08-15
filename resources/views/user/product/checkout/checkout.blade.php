@@ -1,6 +1,5 @@
 @extends('user.layout.master')
 
-
 @section('content')
     <x-layout-user>
         <div class="col-md-4 col-xl-4 col-sm-3">
@@ -28,10 +27,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">City</label>
-                            <select name="city_id" id="city_id" class="form-control">
-                                <option value="">Choose City</option>
-                                {{-- tampilkan citi berdasarkan province_id --}}
-                            </select>
+                            <select name="city_id" id="city_id" class="form-control"></select>
                         </div>
                         <div class="form-group">
                             <label for="">Postal Code</label>
@@ -57,30 +53,60 @@
         </div>
     </x-layout-user>
 @endsection
+@push('plugin-scripts')
+    <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+    {{-- jquery --}}
 
+    {{-- select2 --}}
+@endpush
 @push('custom-scripts')
-    {{-- province/js
-    <script src="{{ asset('js/province.js') }}"></script> --}}
+    {{-- tampilkan data province --}}
     <script>
-        // get city berdasarkan province_id
-        $('#province_id').on('change', function() {
-            var province_id = $(this).val();
-            if (province_id) {
+        $(document).ready(function() {
+            $.ajax({
+                url: "{{ route('provinces') }}",
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    $.each(data.data, function(i, data) {
+                        $('#province_id').append(
+                            $('<option>', {
+                                value: data.id,
+                                text: data.provinces
+                            })
+                        );
+                        console.log(data.provinces);
+                    });
+                }
+            });
+            // tampilkan data city berdasarkan jika province di pilih maka data city yang muncul berdasarkan province yang dipilih
+            $('#province_id').change(function() {
+                $('#city_id').empty();
+                $('#city_id').append(
+                    $('<option>', {
+                        value: "",
+                        text: "Select City"
+                    })
+                );
                 $.ajax({
-                    url: "{{ url('/get/city/') }}/" + province_id,
+                    url: "{{ route('cities') }}",
                     type: "GET",
                     dataType: "json",
+                    data: {
+                        province_id: $(this).val()
+                    },
                     success: function(data) {
-                        $('#city_id').empty();
-                        $.each(data, function(key, value) {
-                            $('#city_id').append('<option value="' + key + '">' + value +
-                                '</option>');
+                        $.each(data.data, function(i, data) {
+                            $('#city_id').append(
+                                $('<option>', {
+                                    value: data.id,
+                                    text: data.city
+                                })
+                            );
                         });
                     }
                 });
-            } else {
-                $('#city_id').empty();
-            }
+            });
         });
     </script>
 @endpush

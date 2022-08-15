@@ -27,7 +27,6 @@ class ChartController extends Controller
         foreach ($charts as $chart) {
             $total += $chart->product->price * $chart->quantity;
         }
-        // dd($total);
         $data = [
             'charts' => $charts,
             'total' => $total,

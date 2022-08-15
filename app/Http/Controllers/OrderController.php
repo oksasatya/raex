@@ -6,6 +6,8 @@ use App\City;
 use App\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use App\Http\Resources\Cities;
+use App\Http\Resources\Provinces;
 use App\Product;
 use App\Province;
 
@@ -100,11 +102,11 @@ class OrderController extends Controller
 
     public function provinces()
     {
-        return Province::all();
+        return new Provinces(Province::all());
     }
 
-    public function cities($id)
+    public function cities()
     {
-        return City::where('province_id', $id)->get();
+        return new Cities(City::all());
     }
 }
