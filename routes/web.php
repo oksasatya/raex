@@ -29,7 +29,7 @@ Route::get('/products', [ProductController::class, 'userIndex'])->name('products
 
 Route::get('provinces', [OrderController::class, 'provinces'])->name('provinces');
 Route::get('cities', [OrderController::class, 'cities'])->name('cities');
-Route::post('cost', [OrderController::class, 'cost'])->name('checkout.ongkir');
+Route::post('cost', [ChartController::class, 'cost'])->name('checkout.ongkir');
 Auth::routes();
 // after login prefix user
 Route::middleware(['auth', 'role:user'])->group(function () {
