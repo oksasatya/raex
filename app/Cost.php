@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Province extends Model
+class Cost extends Model
 {
     use HasFactory;
 
@@ -15,17 +15,18 @@ class Province extends Model
     // get city
     public function city()
     {
-        return $this->hasMany(City::class);
+        return $this->belongsTo(City::class);
     }
 
-    // get cost
-    public function cost()
+    // get province
+    public function province()
     {
-        return $this->hasMany(Cost::class);
+        return $this->belongsTo(Province::class);
     }
-    // user
+
+    // get user
     public function user()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsTo(User::class);
     }
 }

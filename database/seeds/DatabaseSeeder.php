@@ -1,9 +1,8 @@
 <?php
 
-
-use Database\Seeders\RoleSeeder;
 use Database\Seeders\UserSeeder;
 use Database\Seeders\CitySeeder;
+use Database\Seeders\CostSeeder;
 use Database\Seeders\ProductSeeder;
 use Database\Seeders\ProvinceSeeder;
 use Illuminate\Database\Seeder;
@@ -23,6 +22,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             ProvinceSeeder::class,
             CitySeeder::class,
+            CostSeeder::class,
             ProductSeeder::class,
         ]);
     }

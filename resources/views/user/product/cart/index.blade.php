@@ -1,12 +1,16 @@
 @extends('user.layout.master')
 
+@push('plugin-styles')
+    {{-- data table --}}
+    <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.css') }}">
+@endpush
 
 @section('content')
     <x-layout-user>
-        <div class="col-md-12 grid-margin stretch-card">
+        <div class="col-md-12 grid-margin stretch-card shadow-lg">
             <div class="card">
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table" id="tableCart">
                         <thead>
                             <th class="text-capitalize">no</th>
                             <th class="text-capitalize">name</th>
@@ -75,3 +79,25 @@
         </div>
     </x-layout-user>
 @endsection
+@push('plugin-scripts')
+    <script src="{{ asset('assets/js/data-table.js') }}"></script>
+    <script src="{{ asset('assets/plugins/datatables-net/jquery.dataTables.js') }}"></script>
+@endpush
+@push('custom-scripts')
+    {{-- data table --}}
+
+    <script>
+        //    data table
+        $(document).ready(function() {
+            $('#tableCart').DataTable({
+                "paging": false,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": false,
+                "info": false,
+                "autoWidth": true,
+                "responsive": true,
+            });
+        });
+    </script>
+@endpush

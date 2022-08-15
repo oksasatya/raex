@@ -2,8 +2,8 @@
 
 @section('content')
     <x-layout-user>
-        <div class="col-md-4 col-xl-4 col-sm-3">
-            <div class="card">
+        <div class="col-md-8 col-xl-8 col-sm-3 mb-4">
+            <div class="card shadow-lg">
                 {{-- buat from untuk alamat unser dan ambil data province dan ciry --}}
                 <form action="{{ route('checkout.store') }}" method="POST">
                     @csrf
@@ -21,23 +21,22 @@
                         </div>
                         <div class="form-group">
                             <label for="">Province</label>
-                            <select name="province_id" id="province_id" class="form-control">
+                            <select name="province" id="province_id" class="form-control">
                                 <option value="">Select Province</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="">City</label>
-                            <select name="city_id" id="city_id" class="form-control"></select>
+                            <label for="city">City</label>
+                            <select name="city" id="city_id" class="form-control"></select>
                         </div>
                         <div class="form-group">
-                            <label for="">Postal Code</label>
-                            <input type="text" class="form-control" name="postal_code" id="postal_code"
-                                value="{{ Auth::user()->postal_code }}" placeholder="Postal Code">
+                            <label for="postal_code">Postal Code</label>
+                            <select name="postal_code" id="postal_code" class="form-control"></select>
                         </div>
                         <div class="form-group">
                             <label for="">Phone</label>
                             <input type="text" class="form-control" name="
-                                phone"
+                                    phone"
                                 id="phone" value="{{ Auth::user()->phone }}" placeholder="Phone">
 
                         </div>
@@ -47,20 +46,22 @@
                             <input type="text" class="form-control" name="email" id="email"
                                 value="{{ Auth::user()->email }}" placeholder="Email">
                         </div>
-                    </div>
+
+                        {{-- cek ongkir --}}
+                        <div class="form-group">
+                            <label for="">Shipping Method</label>
+                            <select name="shipping_method" id="shipping_method" class="form-control">
+                                <option value="">Select Shipping Method</option>
+                            </select>
+
+                        </div>
                 </form>
             </div>
         </div>
     </x-layout-user>
 @endsection
-@push('plugin-scripts')
-    <script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
-    {{-- jquery --}}
 
-    {{-- select2 --}}
-@endpush
 @push('custom-scripts')
-    {{-- tampilkan data province --}}
     <script>
         $(document).ready(function() {
             $.ajax({
@@ -75,11 +76,9 @@
                                 text: data.provinces
                             })
                         );
-                        console.log(data.provinces);
                     });
                 }
             });
-            // tampilkan data city berdasarkan jika province di pilih maka data city yang muncul berdasarkan province yang dipilih
             $('#province_id').change(function() {
                 $('#city_id').empty();
                 $('#city_id').append(
@@ -88,21 +87,47 @@
                         text: "Select City"
                     })
                 );
+
                 $.ajax({
                     url: "{{ route('cities') }}",
                     type: "GET",
                     dataType: "json",
-                    data: {
-                        province_id: $(this).val()
-                    },
                     success: function(data) {
                         $.each(data.data, function(i, data) {
-                            $('#city_id').append(
-                                $('<option>', {
-                                    value: data.id,
-                                    text: data.city
-                                })
-                            );
+                            if (data.province_id == $('#province_id').val()) {
+                                $('#city_id').append(
+                                    $('<option>', {
+                                        value: data.id,
+                                        text: data.city
+                                    })
+                                );
+                            }
+                        });
+                    }
+                });
+            });
+            $('#city_id').change(function() {
+                $('#postal_code').empty();
+                $('#postal_code').append(
+                    $('<option>', {
+                        value: "",
+                        text: "Select Postal Code"
+                    })
+                );
+                $.ajax({
+                    url: "{{ route('cities') }}",
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        $.each(data.data, function(i, data) {
+                            if (data.id == $('#city_id').val()) {
+                                $('#postal_code').append(
+                                    $('<option>', {
+                                        value: data.postal_code,
+                                        text: data.postal_code
+                                    })
+                                );
+                            }
                         });
                     }
                 });

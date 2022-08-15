@@ -22,4 +22,15 @@ class City extends Model
     {
         return $this->hasMany(Order::class);
     }
+    // user
+    public function user()
+    {
+        return $this->hasMany(User::class);
+    }
+
+    // cost
+    public function cost()
+    {
+        return $this->hasMany(Cost::class);
+    }
 }

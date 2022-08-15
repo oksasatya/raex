@@ -50,4 +50,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Chart::class);
     }
+    // province
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
+    // city
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
 }
