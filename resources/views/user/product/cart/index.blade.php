@@ -56,21 +56,84 @@
                                 </td>
                                 <td>
                                     <div class="float-right">
-                                        <h5>Rp {{ number_format($total, 2, ',', ',') }}</h5>
+                                        <h5 id="price" name="price">Rp {{ number_format($total, 2, ',', ',') }}</h5>
                                     </div>
                                 </td>
                             </tr>
                         </tfoot>
-
                     </table>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card shadow-sm bg-primary">
+                                <div class="card-body">
+                                    <h3>ORIGIN</h3>
+                                    <hr>
+                                    <div class="form-group mb-3">
+                                        <label class="fw-bolder text-white">PROVINSI ASAL</label>
+                                        <select class="form-control" name="province_origin" id="province">
+                                            <option value="0">-- pilih provinsi asal --</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label class="fw-bolder text-white">KOTA / KABUPATEN ASAL</label>
+                                        <select class="form-control" name="city_origin" id="city_origin">
+                                            <option value="">-- pilih kota asal --</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card shadow-sm bg-primary">
+                                <div class="card-body">
+                                    <h3>DESTINATION</h3>
+                                    <hr>
+                                    <div class="form-group mb-3">
+                                        <label class="fw-bolder text-white">PROVINSI TUJUAN</label>
+                                        <select class="form-control" name="province_destination" id="province_destination">
+                                            <option value="0">-- pilih provinsi tujuan --</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label class="fw-bolder text-white">KOTA / KABUPATEN TUJUAN</label>
+                                        <select class="form-control kota-tujuan" name="city_destination"
+                                            id="city_destination">
+                                            <option value="">-- pilih kota tujuan --</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card shadow-sm bg-primary">
+                                <div class="card-body">
+                                    <h3>KURIR</h3>
+                                    <hr>
+                                    <div class="form-group mb-3">
+                                        <label class="fw-bold text-white">PROVINSI TUJUAN</label>
+                                        <select class="form-control" name="courier" id="courier">
+                                            <option value="0">-- pilih kurir --</option>
+                                            <option value="jne">JNE</option>
+                                            <option value="pos">POS</option>
+                                            <option value="tiki">TIKI</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label class="fw-bolder text-white">BERAT (GRAM)</label>
+                                        <input type="number" class="form-control" name="weight" id="weight"
+                                            placeholder="Masukkan Berat (GRAM)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="btn-group mt-2 mb-5 pb-5">
                         <button class="btn btn-sm btn-facebook"><a class="text-white"
                                 href="{{ route('products.index') }}">continue
                                 to shopping</a></button>
 
                         {{-- checkout get api raja ongkir --}}
-                        <button class="btn btn-twitter ms-2"><a class="text-white"
-                                href="{{ route('checkout.index') }}">checkout</a></button>
+                        <a class="btn btn-sm btn-success ms-2" id="cekOngkir">Cek Ongkir</a>
                     </div>
                 </div>
             </div>
@@ -85,7 +148,6 @@
 @endpush
 @push('custom-scripts')
     {{-- data table --}}
-
     <script>
         //    data table
         $(document).ready(function() {
@@ -97,6 +159,116 @@
                 "info": false,
                 "autoWidth": true,
                 "responsive": true,
+            });
+            $.ajax({
+                url: "{{ route('provinces') }}",
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    $.each(data.data, function(i, data) {
+                        $('#province').append(
+                            $('<option>', {
+                                value: data.id,
+                                text: data.provinces
+                            })
+                        );
+                    });
+                }
+            });
+            $('#province').change(function() {
+                $('#city_origin').empty();
+                $.ajax({
+                    url: "{{ route('cities') }}",
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        $.each(data.data, function(i, data) {
+                            if (data.province_id == $('#province').val()) {
+                                $('#city_origin').append(
+                                    $('<option>', {
+                                        value: data.id,
+                                        text: data.city
+                                    })
+                                );
+                            }
+                        });
+                    }
+                });
+            });
+
+            // destination
+            $.ajax({
+                url: "{{ route('provinces') }}",
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    $.each(data.data, function(i, data) {
+                        $('#province_destination').append(
+                            $('<option>', {
+                                value: data.id,
+                                text: data.provinces
+                            })
+                        );
+                    });
+                }
+            });
+            $('#province_destination').change(function() {
+                $('#city_destination').empty();
+                $('#city_destination').append(
+                    $('<option>', {
+                        value: "",
+                    })
+                );
+
+                $.ajax({
+                    url: "{{ route('cities') }}",
+                    type: "GET",
+                    dataType: "json",
+                    success: function(data) {
+                        $.each(data.data, function(i, data) {
+                            if (data.province_id == $('#province_destination').val()) {
+                                $('#city_destination').append(
+                                    $('<option>', {
+                                        value: data.id,
+                                        text: data.city
+                                    })
+                                );
+                            }
+                        });
+                    }
+                });
+            });
+            // cek ongkir
+            $('#cekOngkir').click(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    url: "{{ route('checkout.ongkir') }}",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        origin: $('#city_origin').val(),
+                        destination: $('#city_destination').val(),
+                        weight: $('#weight').val(),
+                        courier: $('#courier').val(),
+                    },
+                    success: function(data) {
+                        $('#price').empty();
+                        console.log(data);
+                        if (json.rajaongkir.status.code == 200) {
+                            var result = json.rajaongkir.results[0].costs;
+                            var ongkir = data[0].cost[0].value;
+                            var estimasi = data[0].cost[0].etd;
+                            // update #price
+                            $('#price').val(ongkir);
+                        } else {
+                            $('#price').html('0');
+                        }
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
             });
         });
     </script>

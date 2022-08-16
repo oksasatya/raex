@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\chart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Kodepintar\LaravelRajaongkir\LaravelRajaongkir as Ongkir;
 
 class ChartController extends Controller
 {
@@ -39,25 +40,35 @@ class ChartController extends Controller
     // cek ongkir
     public function cost(Request $request)
     {
-        $origin = $request->origin;
-        $destination = $request->destination;
+        $origin = $request->city_origin;
+        $destination = $request->city_destination;
         $weight = $request->weight;
         $courier = $request->courier;
-        // server key from env
-        $server_key = env('RAJA_ONGKIR_SERVER_KEY');
-        $url = 'http://api.rajaongkir.com/starter/cost';
-        $data = [
-            'origin' => $origin,
-            'destination' => $destination,
-            'weight' => $weight,
-            'courier' => $courier,
-            'server_key' => $server_key,
-        ];
-        $client = new \GuzzleHttp\Client();
-        $response = $client->request('POST', $url, [
-            'form_params' => $data,
-        ]);
-        $result = json_decode($response->getBody()->getContents(), true);
-        return $result;
+        $api_key = env('RAJA_ONGKIR_KEY');
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => "origin=" . $origin  . "&destination=" . $destination . "&weight=" . $weight . "&courier=" . $courier,
+            CURLOPT_HTTPHEADER => array(
+                "content-type: application/x-www-form-urlencoded",
+                "key: " . $api_key
+            ),
+        ));
+        $response = curl_exec($curl);
+        dd($response);
+        $err = curl_error($curl);
+        curl_close($curl);
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            $data = json_decode($response);
+            return response()->json($data);
+        }
     }
 }

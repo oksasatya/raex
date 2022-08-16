@@ -19,8 +19,10 @@ return new class extends Migration
             $table->unsignedBigInteger('chart_id');
             $table->enum('status', [1, 2, 3])->default(1);
             // total price
-            $table->string('origin');
-            $table->string('destination');
+            $table->string('province_origin');
+            $table->string('city_origin');
+            $table->string('province_destination');
+            $table->string('city_destination');
             $table->integer('weight');
             $table->string('courier');
             $table->integer('cost');
