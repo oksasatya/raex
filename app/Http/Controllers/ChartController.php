@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 // use Illuminate\Http\Request;
 
 use App\chart;
+use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use Kodepintar\LaravelRajaongkir\LaravelRajaongkir as Ongkir;
+use Kodepandai\LaravelRajaOngkir\RajaOngkir;
 
 class ChartController extends Controller
 {
@@ -40,12 +41,9 @@ class ChartController extends Controller
     // cek ongkir
     public function cost(Request $request)
     {
-        $origin = $request->city_origin;
-        $destination = $request->city_destination;
-        $weight = $request->weight;
-        $courier = $request->courier;
         $api_key = env('RAJA_ONGKIR_KEY');
         $curl = curl_init();
+        $service = 'REG';
         curl_setopt_array($curl, array(
             CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
             CURLOPT_RETURNTRANSFER => true,
@@ -54,21 +52,23 @@ class ChartController extends Controller
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => "origin=" . $origin  . "&destination=" . $destination . "&weight=" . $weight . "&courier=" . $courier,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_POSTFIELDS => "origin=" . $request->origin . "&destination=" . $request->destination . "&weight=" . $request->weight . "&courier=" . $request->courier . "&service" . $request->service,
             CURLOPT_HTTPHEADER => array(
                 "content-type: application/x-www-form-urlencoded",
-                "key: " . $api_key
+                "key: $api_key"
             ),
         ));
+
         $response = curl_exec($curl);
-        dd($response);
         $err = curl_error($curl);
+
         curl_close($curl);
+
         if ($err) {
             echo "cURL Error #:" . $err;
         } else {
-            $data = json_decode($response);
-            return response()->json($data);
+            echo $response;
         }
     }
 }

@@ -3,6 +3,11 @@
 @push('plugin-styles')
     {{-- data table --}}
     <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.css') }}">
+    {{-- mdi icon --}}
+    <link href="{{ asset('assets/plugins/@mdi/css/materialdesignicons.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+        integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 @endpush
 
 @section('content')
@@ -23,7 +28,7 @@
                         </thead>
 
                         <tbody>
-                            @foreach ($charts as $chart)
+                            @forelse ($charts as $chart)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $chart->product->name }}</td>
@@ -31,6 +36,7 @@
                                     <td>
                                         <img src="{{ asset('images/products/' . $chart->product->image) }}"
                                             alt="{{ $chart->product->name }}">
+
                                     </td>
                                     <td>
                                         <input type="number" value="{{ $chart->quantity }}" id="quantityInput"
@@ -44,7 +50,15 @@
                                             data-bs-target="#formDelete{{ $chart->id }}">Delete</button>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="7">
+                                        <div class="text-center">
+                                            <h3>No Data</h3>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                         <tfoot>
                             {{-- grand Total --}}
@@ -55,90 +69,25 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="float-right">
-                                        <h5 id="price" name="price">Rp {{ number_format($total, 2, ',', ',') }}</h5>
+                                    <div class="float-right d-flex">
+                                        <p class="mt-1 me-2">Rp</p>
+                                        <input id="priceTotal" value=" {{ number_format($total) }}" name="total_price"
+                                            disabled>
                                     </div>
                                 </td>
                             </tr>
                         </tfoot>
                     </table>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="card shadow-sm bg-primary">
-                                <div class="card-body">
-                                    <h3>ORIGIN</h3>
-                                    <hr>
-                                    <div class="form-group mb-3">
-                                        <label class="fw-bolder text-white">PROVINSI ASAL</label>
-                                        <select class="form-control" name="province_origin" id="province">
-                                            <option value="0">-- pilih provinsi asal --</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label class="fw-bolder text-white">KOTA / KABUPATEN ASAL</label>
-                                        <select class="form-control" name="city_origin" id="city_origin">
-                                            <option value="">-- pilih kota asal --</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card shadow-sm bg-primary">
-                                <div class="card-body">
-                                    <h3>DESTINATION</h3>
-                                    <hr>
-                                    <div class="form-group mb-3">
-                                        <label class="fw-bolder text-white">PROVINSI TUJUAN</label>
-                                        <select class="form-control" name="province_destination" id="province_destination">
-                                            <option value="0">-- pilih provinsi tujuan --</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label class="fw-bolder text-white">KOTA / KABUPATEN TUJUAN</label>
-                                        <select class="form-control kota-tujuan" name="city_destination"
-                                            id="city_destination">
-                                            <option value="">-- pilih kota tujuan --</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="card shadow-sm bg-primary">
-                                <div class="card-body">
-                                    <h3>KURIR</h3>
-                                    <hr>
-                                    <div class="form-group mb-3">
-                                        <label class="fw-bold text-white">PROVINSI TUJUAN</label>
-                                        <select class="form-control" name="courier" id="courier">
-                                            <option value="0">-- pilih kurir --</option>
-                                            <option value="jne">JNE</option>
-                                            <option value="pos">POS</option>
-                                            <option value="tiki">TIKI</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group mb-3">
-                                        <label class="fw-bolder text-white">BERAT (GRAM)</label>
-                                        <input type="number" class="form-control" name="weight" id="weight"
-                                            placeholder="Masukkan Berat (GRAM)">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @include('user.product.cart.cart')
                     <div class="btn-group mt-2 mb-5 pb-5">
                         <button class="btn btn-sm btn-facebook"><a class="text-white"
                                 href="{{ route('products.index') }}">continue
                                 to shopping</a></button>
-
-                        {{-- checkout get api raja ongkir --}}
-                        <a class="btn btn-sm btn-success ms-2" id="cekOngkir">Cek Ongkir</a>
+                        <button class="btn btn-sm btn-success ms-2" id="cekOngkir">Cek Ongkir</button>
                     </div>
                 </div>
             </div>
         </div>
-
         </div>
     </x-layout-user>
 @endsection
@@ -238,38 +187,72 @@
                     }
                 });
             });
-            // cek ongkir
+
+
+
+            // price
+
+
             $('#cekOngkir').click(function(e) {
                 e.preventDefault();
-                $.ajax({
-                    url: "{{ route('checkout.ongkir') }}",
-                    type: "POST",
-                    dataType: "json",
-                    data: {
-                        _token: "{{ csrf_token() }}",
-                        origin: $('#city_origin').val(),
-                        destination: $('#city_destination').val(),
-                        weight: $('#weight').val(),
-                        courier: $('#courier').val(),
-                    },
-                    success: function(data) {
-                        $('#price').empty();
-                        console.log(data);
-                        if (json.rajaongkir.status.code == 200) {
-                            var result = json.rajaongkir.results[0].costs;
-                            var ongkir = data[0].cost[0].value;
-                            var estimasi = data[0].cost[0].etd;
-                            // update #price
-                            $('#price').val(ongkir);
-                        } else {
-                            $('#price').html('0');
+                // kasih loading
+                $('#cekOngkir').html('<i class="fa fa-spinner fa-spin"></i>');
+                $('#cekOngkir').addClass('disabled');
+                // jika sudah selesai loading
+                setTimeout(function() {
+                    $('#cekOngkir').html('Cek Ongkir');
+                    $('#cekOngkir').removeClass('disabled');
+                }, 2000);
+                let origin = $('#city_origin').val();
+                let destination = $('#city_destination').val();
+                let weight = $('#weight').val();
+                let courier = $('#courier').val();
+                let total_harga = $('#priceTotal').val().replace(/,/g, '');
+                // jika value kosoong
+                if (origin == '' || destination == '' || weight == '' || courier == '') {
+                    $('#cekOngkir').html('Cek Ongkir');
+                    alert('Mohon isi semua form');
+                } else {
+                    isprocessing = true;
+                    $.ajax({
+                        url: "{{ route('checkout.ongkir') }}",
+                        type: "POST",
+                        dataType: "json",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            origin: origin,
+                            destination: destination,
+                            weight: weight,
+                            service: 'REG',
+                            courier: courier
+                        },
+                        success: function(data) {
+                            isProcessing = false;
+                            console.log(data['rajaongkir']['results']['0']['costs']['0']['cost']
+                                [
+                                    '0'
+                                ]['value']);
+                            let harga_ongkir = data['rajaongkir']['results']['0']['costs']['0'][
+                                'cost'
+                            ][
+                                '0'
+                            ]['value'];
+                            let harga_total = parseInt(total_harga) + parseInt(harga_ongkir);
+                            total_harga = harga_total;
+                            let rupiah = harga_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g,
+                                ",");
+                            $('#priceTotal').val(rupiah);
+                            // total_harga += data['rajaongkir']['results']['0']['costs']['0']['cost'][
+                            //     '0'
+                            // ]['value'];
+                        },
+                        error: function(data) {
+                            console.log(data);
                         }
-                    },
-                    error: function(data) {
-                        console.log(data);
-                    }
-                });
+                    });
+                }
             });
+
         });
     </script>
 @endpush

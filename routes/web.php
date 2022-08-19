@@ -27,9 +27,7 @@ use Illuminate\Support\Facades\View;
 Route::get('/', [HomeController::class, 'index'])->name('landing-page');
 Route::get('/products', [ProductController::class, 'userIndex'])->name('products.index');
 
-Route::get('provinces', [OrderController::class, 'provinces'])->name('provinces');
-Route::get('cities', [OrderController::class, 'cities'])->name('cities');
-Route::post('cost', [ChartController::class, 'cost'])->name('checkout.ongkir');
+
 Auth::routes();
 // after login prefix user
 Route::middleware(['auth', 'role:user'])->group(function () {
@@ -39,6 +37,9 @@ Route::middleware(['auth', 'role:user'])->group(function () {
         Route::post('/add-to-cart', [ChartController::class, 'addtochart'])->name('add-to-cart');
         Route::get('/checkout', [OrderController::class, 'index'])->name('checkout.index');
         Route::post('/checkout', [OrderController::class, 'store'])->name('checkout.store');
+        Route::get('provinces', [OrderController::class, 'provinces'])->name('provinces');
+        Route::get('cities', [OrderController::class, 'cities'])->name('cities');
+        Route::post('cost', [ChartController::class, 'cost'])->name('checkout.ongkir');
     });
 });
 // group and prefix admin
