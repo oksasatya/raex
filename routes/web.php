@@ -36,10 +36,13 @@ Route::middleware(['auth', 'role:user'])->group(function () {
         Route::get('/cart', [ChartController::class, 'index'])->name('cart.index');
         Route::post('/add-to-cart', [ChartController::class, 'addtochart'])->name('add-to-cart');
         Route::get('/checkout', [OrderController::class, 'index'])->name('checkout.index');
-        Route::post('/checkout', [OrderController::class, 'store'])->name('checkout.store');
+        Route::resource('order', OrderController::class);
         Route::get('provinces', [OrderController::class, 'provinces'])->name('provinces');
         Route::get('cities', [OrderController::class, 'cities'])->name('cities');
         Route::post('cost', [ChartController::class, 'cost'])->name('checkout.ongkir');
+        Route::delete('cart/{id}', [ChartController::class, 'destroy'])->name('cart.destroy');
+        // destroy all cart
+        Route::delete('cart', [ChartController::class, 'destroyAll'])->name('cart.destroyAll');
     });
 });
 // group and prefix admin

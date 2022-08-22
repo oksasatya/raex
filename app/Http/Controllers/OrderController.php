@@ -11,6 +11,7 @@ use App\Http\Resources\Provinces;
 use App\Product;
 use App\Province;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -21,12 +22,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $data = [
-            // select city and province
-            'cities' => City::all(),
-            'provinces' => Province::all(),
-        ];
-        return view('user.product.checkout.checkout', $data);
+        $orders = Order::where('user_id', Auth::user()->id)->get();
+        return view('user.product.order.index', compact('orders'));
     }
 
     /**
@@ -47,13 +44,10 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        $order = new Order();
-        $order->user_id = auth()->user()->id;
-        $order->quantity = $request->quantity;
-        $order->total_price = $request->total_price;
-        $order->payment_status = $request->payment_status;
-        $order->status = $request->status;
-        return redirect()->route('user.product.checkout.checkout')->with('success', 'Product berhasil dibuat');
+        $request->store();
+        return response()->json([
+            'message' => 'success',
+        ]);
     }
 
     /**

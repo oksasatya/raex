@@ -31,18 +31,17 @@
                             @forelse ($charts as $chart)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $chart->product->name }}</td>
-                                    <td>{{ $chart->product->description }}</td>
-                                    <td>
+                                    <td id="product">{{ $chart->product->name }}</td>
+                                    <td id="description">{{ $chart->product->description }}</td>
+                                    <td id="image">
                                         <img src="{{ asset('images/products/' . $chart->product->image) }}"
                                             alt="{{ $chart->product->name }}">
 
                                     </td>
-                                    <td>
-                                        <input type="number" value="{{ $chart->quantity }}" id="quantityInput"
-                                            name="quantity">
+                                    <td id="quantity">
+                                        <input type="number" value="{{ $chart->quantity }}" id="quantityInput">
                                     </td>
-                                    <td>{{ $chart->product->category }}</td>
+                                    <td id="category">{{ $chart->product->category }}</td>
                                     <td id="price" name="price">Rp
                                         {{ number_format($chart->product->price, 2, ',', ',') }}</td>
                                     <td>
@@ -75,6 +74,12 @@
                                             disabled>
                                     </div>
                                 </td>
+                                {{-- checkout --}}
+                                <td>
+                                    <div class="float-right">
+                                        <button class="btn btn-sm btn-facebook" id="checkout">Checkout</button>
+                                    </div>
+                                </td>
                             </tr>
                         </tfoot>
                     </table>
@@ -88,7 +93,8 @@
                 </div>
             </div>
         </div>
-        </div>
+        <input type="hidden" id="shipping_price" name="shipping_price">
+        <input type="hidden" id="no_order" name="no_order">
     </x-layout-user>
 @endsection
 @push('plugin-scripts')
@@ -100,15 +106,63 @@
     <script>
         //    data table
         $(document).ready(function() {
-            $('#tableCart').DataTable({
-                "paging": false,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": false,
-                "info": false,
-                "autoWidth": true,
-                "responsive": true,
+            var generate_no_order = Math.floor(Math.random() * 100000000000000) + 1;
+            $('#no_order').val(generate_no_order);
+            $('#checkout').click(function() {
+                var total_price = $('#priceTotal').val().replace(/\,/g, '');
+                var user_id = {{ Auth::user()->id }};
+                var city_origin = $('#city_origin').find("option:selected").text();
+                var province_origin = $('#province').find("option:selected").text();
+                var city_destination = $('#city_destination').find("option:selected").text();
+                var province_destination = $('#province_destination').find("option:selected").text();
+                var shipping_price = $('#shipping_price').val();
+                var no_order = $('#no_order').val();
+                var weight = $('#weight').val();
+                var courier = $('#courier').val();
+                var data = {
+                    _token: '{{ csrf_token() }}',
+                    total_price: total_price,
+                    shipping_price: shipping_price,
+                    user_id: user_id,
+                    city_origin: city_origin,
+                    province_origin: province_origin,
+                    city_destination: city_destination,
+                    province_destination: province_destination,
+                    weight: weight,
+                    courier: courier,
+                    no_order: no_order
+                };
+                $.ajax({
+                    url: '{{ route('order.store') }}',
+                    type: 'POST',
+                    data: data,
+                    success: function(data) {
+                        window.location.href = "{{ route('order.index') }} ";
+                        // sweetalert success
+                        swal({
+                            title: "Success!",
+                            text: "Your order has been placed!",
+                            icon: "success",
+                            button: "OK",
+                        });
+                        // console.log(data);
+                    }
+                });
+                $.ajax({
+                    url: '{{ route('cart.destroyAll') }}',
+                    type: 'DELETE',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                        window.location.href =
+                            "{{ route('order.index') }} ";
+                    }
+                });
             });
+
+
+            // get province
             $.ajax({
                 url: "{{ route('provinces') }}",
                 type: "GET",
@@ -188,17 +242,11 @@
                 });
             });
 
-
-
             // price
-
-
             $('#cekOngkir').click(function(e) {
                 e.preventDefault();
-                // kasih loading
                 $('#cekOngkir').html('<i class="fa fa-spinner fa-spin"></i>');
                 $('#cekOngkir').addClass('disabled');
-                // jika sudah selesai loading
                 setTimeout(function() {
                     $('#cekOngkir').html('Cek Ongkir');
                     $('#cekOngkir').removeClass('disabled');
@@ -228,23 +276,17 @@
                         },
                         success: function(data) {
                             isProcessing = false;
-                            console.log(data['rajaongkir']['results']['0']['costs']['0']['cost']
-                                [
-                                    '0'
-                                ]['value']);
                             let harga_ongkir = data['rajaongkir']['results']['0']['costs']['0'][
                                 'cost'
                             ][
                                 '0'
                             ]['value'];
+                            $("#shipping_price").val(harga_ongkir);
                             let harga_total = parseInt(total_harga) + parseInt(harga_ongkir);
                             total_harga = harga_total;
                             let rupiah = harga_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g,
                                 ",");
                             $('#priceTotal').val(rupiah);
-                            // total_harga += data['rajaongkir']['results']['0']['costs']['0']['cost'][
-                            //     '0'
-                            // ]['value'];
                         },
                         error: function(data) {
                             console.log(data);
@@ -256,3 +298,18 @@
         });
     </script>
 @endpush
+{{-- // $('.deleteCart').click(function() {
+// var id = $(this).data('id');
+// var data = {
+// _token: '{{ csrf_token() }}',
+// id: id
+// };
+// $.ajax({
+// url: '{{ route('cart.destroy') }}',
+// type: 'DELETE',
+// data: data,
+// success: function(data) {
+// window.location.href = "{{ route('cart.index') }}";
+// }
+// });
+// }); --}}

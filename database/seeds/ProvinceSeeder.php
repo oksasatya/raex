@@ -17,7 +17,7 @@ class ProvinceSeeder extends Seeder
     public function run()
     {
         //raja ongkir get data url from env
-        $url_province = 'https://api.rajaongkir.com/starter/province?key=d8534a79e5aaaf2b50cf311aea7a7c36';
+        $url_province = 'https://api.rajaongkir.com/starter/province?key=18aba37f5dfeeb41e7a90773b9c1c44b';
         $json_str = file_get_contents($url_province);
         $json_obj = json_decode($json_str);
         $provinces = [];

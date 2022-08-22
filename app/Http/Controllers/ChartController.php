@@ -71,4 +71,22 @@ class ChartController extends Controller
             echo $response;
         }
     }
+
+    // destroy
+    public function destroy($id)
+    {
+        $chart = chart::find($id);
+        $chart->delete();
+        return redirect()->back()->with('success', 'Product berhasil dihapus');
+    }
+
+    // destroy all
+    public function destroyall()
+    {
+        $charts = chart::where('user_id', auth()->user()->id)->get();
+        foreach ($charts as $chart) {
+            $chart->delete();
+        }
+        return response()->json(['success' => 'Product berhasil dihapus']);
+    }
 }
