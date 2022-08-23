@@ -4,10 +4,10 @@
     </a>
     <div class="navbar-content">
         <ul class="navbar-nav">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+            <li class="nav-item dropdown mt-2 me-3">
+                <a class="nav-link dropdown-toggle d-flex" href="#" id="profileDropdown" role="button"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img class="wd-30 ht-30 rounded-circle" src="{{ url('https://via.placeholder.com/30x30') }}"
+                    <img class="wd-60 ht-60 rounded-circle" src="{{ url('https://via.placeholder.com/80x80') }}"
                         alt="profile">
                 </a>
                 <div class="dropdown-menu p-0" aria-labelledby="profileDropdown">
@@ -22,24 +22,6 @@
                         </div>
                     </div>
                     <ul class="list-unstyled p-1">
-                        <li class="dropdown-item py-2">
-                            <a href="{{ url('/general/profile') }}" class="text-body ms-0">
-                                <i class="me-2 icon-md" data-feather="user"></i>
-                                <span>Profile</span>
-                            </a>
-                        </li>
-                        <li class="dropdown-item py-2">
-                            <a href="javascript:;" class="text-body ms-0">
-                                <i class="me-2 icon-md" data-feather="edit"></i>
-                                <span>Edit Profile</span>
-                            </a>
-                        </li>
-                        <li class="dropdown-item py-2">
-                            <a href="javascript:;" class="text-body ms-0">
-                                <i class="me-2 icon-md" data-feather="repeat"></i>
-                                <span>Switch User</span>
-                            </a>
-                        </li>
                         {{-- form logout --}}
                         <li class="dropdown-item py-2">
                             <a href="{{ route('logout') }}"
