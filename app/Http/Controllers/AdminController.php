@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\User;
+use App\UserPayemnt;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
@@ -20,13 +21,17 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $order = Order::count();
+        $orderCount = Order::count();
         $roles = User::with('role:user')->count();
+        $users = User::with('orders')->get();
+        $userPayments = UserPayemnt::all();
         $data = [
-            'order' => $order,
-            'roles' => $roles
+            'orderCount' => $orderCount,
+            'roles' => $roles,
+            'users' => $users,
+            'userPayments' => $userPayments
         ];
         return view('dashboard', $data);
     }

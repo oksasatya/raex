@@ -60,4 +60,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(City::class);
     }
+
+    public function UserPayemnt()
+    {
+        return $this->belongsToMany(UserPayemnt::class);
+    }
 }

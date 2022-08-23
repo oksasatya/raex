@@ -30,7 +30,7 @@
                         <div class="d-flex justify-content-between align-items-baseline">
                             <h6 class="card-title mb-0">New Orders</h6>
                         </div>
-                        <h2 class="mt-3"> {{ $order }}</h2>
+                        <h2 class="mt-3"> {{ $orderCount }}</h2>
                     </div>
                 </div>
             </div>
@@ -42,13 +42,78 @@
             <div class="card overflow-hidden">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-baseline mb-4 mb-md-3">
-                        <h6 class="card-title mb-0">Revenue</h6>
+                        <h6 class="card-title mb-0">Pesanan</h6>
 
                     </div>
                     <div class="row align-items-start mb-2">
-                        <div class="col-md-7">
-                            <p class="text-muted tx-13 mb-3 mb-md-0">Revenue is the income that a business has from its
-                                normal business activities, usually from the sale of goods and services to customers.</p>
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table" id="tableOrder">
+                                    <thead class="bg-teal">
+                                        <tr>
+                                            <td>No</td>
+                                            <td>No Order</td>
+                                            <td>Nama Pemesan</td>
+                                            <td>Dikirim Dari</td>
+                                            <td>Dikirim Ke</td>
+                                            <td>Berat</td>
+                                            <td>Courier</td>
+                                            <td>Total Harga</td>
+                                            <td>Status Pembayaran</td>
+                                            <td>Status Pengiriman</td>
+                                            <td>Action</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($users as $user)
+                                            @foreach ($user->orders as $order)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $order->no_order }}</td>
+                                                    <td>{{ $user->name }}</td>
+                                                    <td>{{ $order->city_origin }}</td>
+                                                    <td>{{ $order->city_destination }}</td>
+                                                    <td>{{ number_format($order->weight) }} Gram</td>
+                                                    {{-- <td>
+                                                        @foreach ($userPayments as $item)
+                                                            <img src="{{ asset('images/payment/' . $item->image) }}"
+                                                                alt="{{ $item->user_id }}">
+                                                        @endforeach
+                                                    </td> --}}
+                                                    <td>{{ $order->courier }}</td>
+                                                    <td>Rp. {{ number_format($order->total_price, 2) }}</td>
+                                                    @if ($order->payment_status == 1)
+                                                        <td>
+                                                            <span class="badge badge-pill bg-danger">Belum Dibayar</span>
+                                                        </td>
+                                                    @else
+                                                        <td>
+                                                            <span class="badge badge-pill bg-success">Sudah Dibayar</span>
+                                                        </td>
+                                                    @endif
+                                                    @if ($order->status == 1)
+                                                        <td>
+                                                            <span class="badge badge-pill bg-warning">Siap Dikirim</span>
+                                                        </td>
+                                                    @elseif ($order->status == 2)
+                                                        <td>
+                                                            <span class="badge badge-pill bg-primary">Dikirim</span>
+                                                        </td>
+                                                    @else
+                                                        <td>
+                                                            <span class="badge badge-pill bg-success">Selesai</span>
+                                                        </td>
+                                                    @endif
+
+                                                    <td>
+                                                        <button class="btn btn-facebook">Update Pengiriman</button>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
                     </div>

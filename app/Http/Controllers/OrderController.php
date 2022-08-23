@@ -123,7 +123,7 @@ class OrderController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = $user_payment->order_id . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('image/payment') . $imageName);
+            $image->move(public_path('images/payment'), $imageName);
             $user_payment->image = $imageName;
             $user_payment->save();
         }
