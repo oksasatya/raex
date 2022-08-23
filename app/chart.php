@@ -21,11 +21,6 @@ class chart extends Model
         return $this->belongsTo(Product::class);
     }
 
-    // relation order
-    public function order()
-    {
-        return $this->hasOne(Order::class);
-    }
 
     public function user()
     {

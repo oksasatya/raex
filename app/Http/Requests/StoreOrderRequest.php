@@ -3,7 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Order;
+use App\Product;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class StoreOrderRequest extends FormRequest
 {

@@ -24,7 +24,7 @@
             });
         </script>
     @endif
-    <section class="header" style="background-image: url('assets/images/raex/turtle.jpg')">
+    <section class="header" style="background-image: url('assets/images/turtle/3.jpg')">
         <div class="container position-relative px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">

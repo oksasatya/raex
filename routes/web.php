@@ -43,6 +43,9 @@ Route::middleware(['auth', 'role:user'])->group(function () {
         Route::delete('cart/{id}', [ChartController::class, 'destroy'])->name('cart.destroy');
         // destroy all cart
         Route::delete('cart', [ChartController::class, 'destroyAll'])->name('cart.destroyAll');
+
+        // upload bukti pembayaran
+        Route::post('/upload', [OrderController::class, 'uploadImage'])->name('images.upload');
     });
 });
 // group and prefix admin

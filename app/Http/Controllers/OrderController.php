@@ -10,8 +10,12 @@ use App\Http\Resources\Cities;
 use App\Http\Resources\Provinces;
 use App\Product;
 use App\Province;
+use App\UserPayemnt;
+use GrahamCampbell\ResultType\Success;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use PDO;
 
 class OrderController extends Controller
 {
@@ -22,8 +26,12 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::where('user_id', Auth::user()->id)->get();
-        return view('user.product.order.index', compact('orders'));
+        $orders = Order::where('user_id', Auth::user()->id)->paginate(8);
+        $total = 0;
+        foreach ($orders as $order) {
+            $total +=  $order->total_price;
+        }
+        return view('user.product.order.index', compact('orders', 'total'));
     }
 
     /**
@@ -42,9 +50,9 @@ class OrderController extends Controller
      * @param  \App\Http\Requests\StoreOrderRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreOrderRequest $request)
+    public function store(StoreOrderRequest $storeOrderRequest)
     {
-        $request->store();
+        $storeOrderRequest->store();
         return response()->json([
             'message' => 'success',
         ]);
@@ -103,5 +111,23 @@ class OrderController extends Controller
     public function cities()
     {
         return new Cities(City::all());
+    }
+
+
+    public function uploadImage(Request $request)
+    {
+        $user_payment = new UserPayemnt();
+        $user_payment->order_id = $request->order_id;
+        $user_payment->user_id = Auth::user()->id;
+        $user_payment->image = $request->image;
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = $user_payment->order_id . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('image/payment') . $imageName);
+            $user_payment->image = $imageName;
+            $user_payment->save();
+        }
+
+        return redirect()->route('order.index')->with('success', 'Terimakasih Telah Melakukan Pembayaran, Kami Akan Mengecek Pembayaran Anda maksimal 1x24 jam');
     }
 }

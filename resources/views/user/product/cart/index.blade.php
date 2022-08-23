@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
         integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" />
 @endpush
+<script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 
 @section('content')
     <x-layout-user>
@@ -38,9 +40,7 @@
                                             alt="{{ $chart->product->name }}">
 
                                     </td>
-                                    <td id="quantity">
-                                        <input type="number" value="{{ $chart->quantity }}" id="quantityInput">
-                                    </td>
+                                    <td id="quantity">{{ $chart->quantity }}</td>
                                     <td id="category">{{ $chart->product->category }}</td>
                                     <td id="price" name="price">Rp
                                         {{ number_format($chart->product->price, 2, ',', ',') }}</td>
@@ -137,15 +137,7 @@
                     type: 'POST',
                     data: data,
                     success: function(data) {
-                        window.location.href = "{{ route('order.index') }} ";
-                        // sweetalert success
-                        swal({
-                            title: "Success!",
-                            text: "Your order has been placed!",
-                            icon: "success",
-                            button: "OK",
-                        });
-                        // console.log(data);
+                        console.log(data);
                     }
                 });
                 $.ajax({
@@ -155,8 +147,7 @@
                         _token: '{{ csrf_token() }}'
                     },
                     success: function(data) {
-                        window.location.href =
-                            "{{ route('order.index') }} ";
+                        window.location.href = "{{ route('order.index') }} ";
                     }
                 });
             });

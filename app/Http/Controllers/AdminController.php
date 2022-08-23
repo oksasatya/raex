@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
+use App\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
 
 class AdminController extends Controller
 {
@@ -18,7 +22,13 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $order = Order::count();
+        $roles = User::with('role:user')->count();
+        $data = [
+            'order' => $order,
+            'roles' => $roles
+        ];
+        return view('dashboard', $data);
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 // use Illuminate\Http\Request;
 
 use App\chart;
+use App\Order;
 use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -32,6 +33,7 @@ class ChartController extends Controller
         $data = [
             'charts' => $charts,
             'total' => $total,
+            'order' => new Order()
         ];
         return view('user.product.cart.index', $data);
     }
@@ -87,6 +89,6 @@ class ChartController extends Controller
         foreach ($charts as $chart) {
             $chart->delete();
         }
-        return response()->json(['success' => 'Product berhasil dihapus']);
+        return response()->json(['success' => 'Order berhasil disimpan']);
     }
 }

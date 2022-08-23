@@ -11,7 +11,7 @@
         <script>
             Swal.fire({
                 toast: true,
-                position: 'top-end',
+                position: 'top',
                 showConfirmButton: false,
                 timer: 3000,
                 timerProgressBar: true,

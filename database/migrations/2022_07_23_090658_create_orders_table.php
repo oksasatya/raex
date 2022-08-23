@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->bigInteger('no_order');
+            $table->bigInteger('no_order')->nullable();
             $table->enum('status', [1, 2, 3])->comment('1: pending, 2: on progress, 3: done')->default(1);
             $table->string('province_origin');
             $table->string('city_origin');

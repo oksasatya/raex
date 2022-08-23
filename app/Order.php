@@ -39,7 +39,7 @@ class Order extends Model
     }
     public function products()
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class, 'order_products', 'product_id', 'order_id');
     }
     public function user()
     {
@@ -53,5 +53,10 @@ class Order extends Model
     public function cities()
     {
         return $this->belongsTo(City::class);
+    }
+
+    public function user_payment()
+    {
+        return $this->belongsToMany(UserPayemnt::class);
     }
 }
