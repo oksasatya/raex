@@ -88,7 +88,12 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $order = Order::find($id);
+        $order->update([
+            'payment_status' => $request->payment_status,
+        ]);
+        // dd($order);
+        return redirect()->route('dashboard.index')->with('success', 'berhasil melakukan update');
     }
 
     /**

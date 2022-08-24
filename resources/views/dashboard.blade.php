@@ -74,12 +74,6 @@
                                                     <td>{{ $order->city_origin }}</td>
                                                     <td>{{ $order->city_destination }}</td>
                                                     <td>{{ number_format($order->weight) }} Gram</td>
-                                                    {{-- <td>
-                                                        @foreach ($userPayments as $item)
-                                                            <img src="{{ asset('images/payment/' . $item->image) }}"
-                                                                alt="{{ $item->user_id }}">
-                                                        @endforeach
-                                                    </td> --}}
                                                     <td>{{ $order->courier }}</td>
                                                     <td>Rp. {{ number_format($order->total_price, 2) }}</td>
                                                     @if ($order->payment_status == 1)
@@ -106,9 +100,12 @@
                                                     @endif
 
                                                     <td>
-                                                        <button class="btn btn-facebook">Update Pengiriman</button>
+                                                        <button class="btn btn-facebook" data-bs-toggle="modal"
+                                                            data-bs-target="#formUpdate{{ $order->id }}">Update
+                                                            Pengiriman</button>
                                                     </td>
                                                 </tr>
+                                                @include('user.modal.update')
                                             @endforeach
                                         @endforeach
                                     </tbody>

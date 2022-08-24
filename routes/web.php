@@ -52,6 +52,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::group(['prefix' => 'admin'], function () {
         Route::get('/', [AdminController::class, 'index']);
+        Route::resource('dashboard', AdminController::class);
         //prefix product
         Route::group(['prefix' => 'products'], function () {
             Route::resource('/index', ProductController::class);
