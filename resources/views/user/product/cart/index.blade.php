@@ -49,6 +49,7 @@
                                             data-bs-target="#formDelete{{ $chart->id }}">Delete</button>
                                     </td>
                                 </tr>
+                                @include('user.product.cart.delete')
                             @empty
                                 <tr>
                                     <td colspan="7">
@@ -289,18 +290,3 @@
         });
     </script>
 @endpush
-{{-- // $('.deleteCart').click(function() {
-// var id = $(this).data('id');
-// var data = {
-// _token: '{{ csrf_token() }}',
-// id: id
-// };
-// $.ajax({
-// url: '{{ route('cart.destroy') }}',
-// type: 'DELETE',
-// data: data,
-// success: function(data) {
-// window.location.href = "{{ route('cart.index') }}";
-// }
-// });
-// }); --}}

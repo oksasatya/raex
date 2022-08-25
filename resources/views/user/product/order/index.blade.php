@@ -16,11 +16,8 @@
     @if (session('success'))
         <script>
             Swal.fire({
-                toast: true,
                 position: 'top',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true,
+                showConfirmButton: true,
                 title: 'Success!',
                 icon: 'success',
                 text: '{{ session('success') }}',
@@ -102,8 +99,18 @@
                 <div class="card-body">
                     <h3 class="text-center">Konfirmasi Bukti Pembayaran</h3>
                     <p>Silahkan kirim bukti pembayaran anda disini</p>
-                    <p>Total Tagihan Anda <strong> Rp. {{ number_format($total, 2) }}</strong> Silahkan
-                        kirim Pembayaran Anda ke Bank BCA A/N : BAYU HARTHADINATA <strong>No Rek:1239834642431</strong> </p>
+                    @forelse ($orders as $order)
+                        @if ($order->payment_status == 1)
+                            <p>Total Tagihan Anda <strong> Rp. {{ number_format($total, 2) }}</strong> Silahkan
+                                kirim Pembayaran Anda ke Bank BCA A/N : BAYU HARTHADINATA <strong>No
+                                    Rek:1239834642431</strong>
+                            </p>
+                        @else
+                            <p>Anda Belum Memiliki Pembayaran, Silahkan Belanja </p>
+                        @endif
+                    @empty
+                        <p>Tidak Ada Pembayaran</p>
+                    @endforelse
                     <div class="mt-5 mb-3 text-center">
                         <h2>Silahkan Kirim Bukti Pembayaran Anda Disini</h2>
                         <span class="fs-1"><i class="mdi mdi-arrow-down"></i></span>

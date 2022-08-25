@@ -16,11 +16,27 @@
                         @endforeach
                     </div>
                     <div class="mb-3">
-                        <label for="payment_status" class="form-label">Category</label>
+                        <label for="payment_status" class="form-label">Status Pembayaran</label>
                         <select name="payment_status" id="payment_status" class="form-control">
                             <option @selected($order->payment_status == 1) value="1">Belum Dibayar
                             </option>
                             <option @selected($order->payment_status == 2) value="2">Sudah Dibayar
+                            </option>
+                        </select>
+                        @error('category')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status Pengiriman</label>
+                        <select name="status" id="status" class="form-control">
+                            <option @selected($order->status == 1) value="1">Siap Dikirim
+                            </option>
+                            <option @selected($order->status == 2) value="2">Dikirim
+                            </option>
+                            <option @selected($order->status == 3) value="3">Selesai
                             </option>
                         </select>
                         @error('category')

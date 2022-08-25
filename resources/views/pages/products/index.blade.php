@@ -19,7 +19,6 @@
                 text: '{{ session('success') }}',
                 type: 'success',
                 icon: 'success',
-                // position tengah atas
                 position: 'top',
                 showConfirmButton: false,
                 timer: 2000

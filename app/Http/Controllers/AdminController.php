@@ -24,7 +24,7 @@ class AdminController extends Controller
     public function index(Request $request)
     {
         $orderCount = Order::count();
-        $roles = User::with('role:user')->count();
+        $roles = Role::with('user')->where('name', '=', 'user')->count();
         $users = User::with('orders')->get();
         $userPayments = UserPayemnt::all();
         $data = [
@@ -91,6 +91,7 @@ class AdminController extends Controller
         $order = Order::find($id);
         $order->update([
             'payment_status' => $request->payment_status,
+            'status' => $request->status
         ]);
         // dd($order);
         return redirect()->route('dashboard.index')->with('success', 'berhasil melakukan update');

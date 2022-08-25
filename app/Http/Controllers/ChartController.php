@@ -25,7 +25,8 @@ class ChartController extends Controller
 
     public function index()
     {
-        $charts = chart::where('user_id', auth()->user()->id)->get();
+        // $charts = chart::where('user_id', auth()->user()->id)->get();
+        $charts = chart::all();
         $total = 0;
         foreach ($charts as $chart) {
             $total += $chart->product->price * $chart->quantity;
